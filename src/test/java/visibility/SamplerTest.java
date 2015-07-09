@@ -2,6 +2,8 @@ package visibility;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class SamplerTest {
@@ -21,9 +23,14 @@ public class SamplerTest {
 	
 	@Test
 	public void quicklyDecidesNetworkWithMillionNodes() throws Exception {
-		Node root = new Sampler(15000000, 5000000, 1000).buildNetwork();
-		long millis = System.currentTimeMillis();
-		System.out.println(root.getVisibleChildren().size());
-		System.out.println(System.currentTimeMillis() - millis);
+		final Sampler sampler = new Sampler(1500000, 500000, 10);
+		sampler.buildNetwork();
+		List<Node> sampleNodes = sampler.nodeSample(10);
+		sampleNodes.forEach(root -> {
+			long millis = System.currentTimeMillis();
+			System.out.println(root.getId()+": "+root.getVisibleChildren().size()
+					+" children in "+(System.currentTimeMillis() - millis)
+					+" milliseconds"); 
+		});
 	}
 }

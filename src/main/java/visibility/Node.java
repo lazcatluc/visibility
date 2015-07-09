@@ -7,8 +7,17 @@ import java.util.stream.Stream;
 
 public class Node {
 
+	private final int id;
 	private Set<Node> children = new HashSet<>();
 	private boolean hidden;
+	
+	public Node() {
+		this(-1);
+	}
+	
+	public Node(int id) {
+		this.id = id;
+	}
 
 	public Set<Node> getVisibleChildren() {
 		Set<Node> visible = Collections.synchronizedSet(new HashSet<>());
@@ -31,6 +40,14 @@ public class Node {
 	
 	public boolean isVisible() {
 		return !hidden;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Set<Node> getChildren() {
+		return children;
 	}
 
 }

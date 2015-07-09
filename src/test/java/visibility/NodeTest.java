@@ -21,4 +21,39 @@ public class NodeTest {
 		
 		assertEquals(Collections.singleton(child), parent.getVisibleChildren());
 	}
+	
+	@Test
+	public void nodeCanViewChildOfChild() throws Exception {
+		Node parent = new Node();
+		Node child = new Node();
+		parent.addChild(child);
+		Node childOfChild = new Node();
+		child.addChild(childOfChild);
+		
+		assertTrue(parent.getVisibleChildren().contains(childOfChild));
+	}
+	
+	@Test
+	public void childCanHideFromParentNode() throws Exception {
+		Node parent = new Node();
+		Node child = new Node();
+		parent.addChild(child);
+		
+		child.hide();
+		
+		assertEquals(Collections.emptySet(), parent.getVisibleChildren());
+	}
+	
+	@Test
+	public void grandChildWithHiddenParentIsNotVisible() throws Exception {
+		Node parent = new Node();
+		Node child = new Node();
+		parent.addChild(child);
+		Node childOfChild = new Node();
+		child.addChild(childOfChild);
+		
+		child.hide();
+		
+		assertFalse(parent.getVisibleChildren().contains(childOfChild));
+	}
 }
